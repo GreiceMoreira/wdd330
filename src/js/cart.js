@@ -10,12 +10,10 @@ function renderCartContents() {
 
   // Render the total price after rendering the cart contents
   renderTotalPrice(cartItems);
-
 }
 
 function cartItemTemplate(item) {
-  const newItem = 
-  `<li class="cart-card divider">
+  const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
       src="${item.Image}"
@@ -33,17 +31,19 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
-
 //cardItems it is a array of items
-// I need add to the total each final price 
+// I need add to the total each final price
 //for each item that i have in my cartItems, take the Final price and add
 //my total template, price and button
 
 // Function to render the total price
 function renderTotalPrice(cartItems) {
-  const totalPrice = cartItems.reduce((total, item) => total + item.FinalPrice, 0); 
-  const totalHtml = totalPriceTemplate(totalPrice); 
-  document.querySelector(".total-price").innerHTML = totalHtml; 
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.FinalPrice,
+    0,
+  );
+  const totalHtml = totalPriceTemplate(totalPrice);
+  document.querySelector(".total-price").innerHTML = totalHtml;
 }
 
 // Function to generate the total price HTML
