@@ -20,20 +20,21 @@ export default class ProductDetails {
         .addEventListener('click', this.addProductToCart.bind(this));
     }
 
-    addProductToCart(product) {
+    addProductToCart() {
       const cartItems = getLocalStorage("so-cart") || [];
-      cartItems.push(product);
+      cartItems.push(this.product);
       setLocalStorage("so-cart", cartItems);
     }
 
+
     renderProductDetails() {
-        productDetailsTemplate(this.product);
+      document.querySelector(".product-detail").innerHTML = this.productDetailsTemplate(this.product);
     }
 
-    getData() {
-        return fetch(this.path)
-        .then(convertToJson).then((data) => data);
-    }
+    // getData() {
+    //     return fetch(this.path)
+    //     .then(convertToJson).then((data) => data);
+    // }
 
     productDetailsTemplate(product){
         return `
