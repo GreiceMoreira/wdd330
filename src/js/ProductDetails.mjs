@@ -31,10 +31,10 @@ export default class ProductDetails {
       document.querySelector(".product-detail").innerHTML = this.productDetailsTemplate(this.product);
     }
 
-    // getData() {
-    //     return fetch(this.path)
-    //     .then(convertToJson).then((data) => data);
-    // }
+     getData() {
+         return fetch(this.path)
+        .then(convertToJson).then((data) => data);
+    }
 
     productDetailsTemplate(product){
         return `
