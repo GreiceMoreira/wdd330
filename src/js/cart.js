@@ -80,7 +80,7 @@ function showRemoveNotification(itemId) {
 
     setTimeout(() => {
       notification.style.display = "none";
-    }, 5000);
+    }, 3000);
   }
 }
 

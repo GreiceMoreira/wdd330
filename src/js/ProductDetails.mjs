@@ -33,7 +33,7 @@ export default class ProductDetails {
       setTimeout(() => {
         
         notification.style.display = "none";
-      }, 5000);
+      }, 3000);
     }
 
 
