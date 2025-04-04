@@ -281,3 +281,22 @@ footer {
   flex-direction: row;
   float: right;
 }
+
+/* Product Grid */
+
+.product-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  justify-items: baseline;
+  list-style: none;
+}
+
+.product-grid img {
+  max-width: 160px;
+  height: auto;
+}
