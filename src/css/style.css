@@ -261,3 +261,23 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+/* Notification */
+
+#notification {
+  display: none;
+  position: fixed;
+  background-color: #8a470c;
+  border: 2px solid var(--primary-color);
+  margin: 5px;
+  color: var(--light-grey);
+  padding: 20px;
+}
+
+.remove {
+  background-color: #8a470c;
+  color: #d0d0d0;
+  display: flex;
+  flex-direction: row;
+  float: right;
+}

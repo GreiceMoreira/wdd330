@@ -12,9 +12,9 @@ function productCardTemplate(product) {
         </a>
       </li>
       `;
-  }
+}
   
-  export default class ProductList {
+export default class ProductList {
     constructor(category, dataSource, listElement) {
       this.category = category;
       this.dataSource = dataSource;

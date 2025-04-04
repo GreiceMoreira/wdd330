@@ -15,15 +15,25 @@ export default class ProductDetails {
         this.renderProductDetails();
         // once the HTML is rendered, add a listener to the Add to Cart button
         // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
-        document
-        .getElementById('addToCart')
-        .addEventListener('click', this.addProductToCart.bind(this));
+        document.getElementById('addToCart').addEventListener('click', this.addProductToCart.bind(this));
     }
 
     addProductToCart() {
       const cartItems = getLocalStorage("so-cart") || [];
       cartItems.push(this.product);
       setLocalStorage("so-cart", cartItems);
+      this.addNotification();
+    }
+
+    addNotification() {
+      const notification = document.getElementById("notification");
+      notification.style.display = "block";
+      document.getElementById("notification").innerHTML = "Product added to the cart!";
+      
+      setTimeout(() => {
+        
+        notification.style.display = "none";
+      }, 5000);
     }
 
 
@@ -57,6 +67,7 @@ export default class ProductDetails {
   
           <div class="product-detail__add">
             <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
+            <div id="notification"></div>
          </div>
        </section>`;
     
