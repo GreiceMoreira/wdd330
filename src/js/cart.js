@@ -14,7 +14,7 @@ function renderCartContents() {
   if (cartItems.length === 0) {
     document.querySelector(".product-list").innerHTML =
       "<p>Your cart is empty!</p>";
-    document.querySelector(".total-price").innerHTML = "";
+    document.querySelector(".list-footer.hide").innerHTML = "";
     return;
   }
 
@@ -40,7 +40,7 @@ function renderCartContents() {
 function cartItemTemplate(item) {
   return `<li class="cart-card divider">
     <a href="#" class="cart-card__image">
-      <img src="${item.Image}" alt="${item.Name}" />
+      <img src="${item.Images.PrimarySmall}" alt="${item.Name}" />
     </a>
     <a href="#">
       <h2 class="card__name">${item.Name}</h2>
@@ -95,11 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-//cardItems it is a array of items
-// I need add to the total each final price
-//for each item that i have in my cartItems, take the Final price and add
-//my total template, price and button
-
 // Function to render the total price
 function renderTotalPrice(cartItems) {
   const totalPrice = cartItems.reduce(
@@ -107,16 +102,16 @@ function renderTotalPrice(cartItems) {
     0,
   );
 
-  document.querySelector(".total-price").innerHTML =
+  document.querySelector(".list-footer.hide").innerHTML =
     totalPriceTemplate(totalPrice);
 }
 
 // Function to generate the total price HTML
 function totalPriceTemplate(totalPrice) {
   return `
-    <p>Total: $${totalPrice.toFixed(2)}</p>
-    <button id="checkout">Checkout</button>
-  `;
+      <a href="/checkout/" class="checkout-button">Checkout</a>
+      <span class="total-label">Total:</span>
+      <span class="list-total">$${totalPrice.toFixed(2)}</span>`;
 }
 
 renderCartContents();
