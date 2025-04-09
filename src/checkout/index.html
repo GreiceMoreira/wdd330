@@ -32,6 +32,8 @@
                 title="Enter your first name"
                 autocomplete="given-name"
                 placeholder="Enter"
+                aria-required="true"
+                value="Maria"
               />
 
               <!-- last name  -->
@@ -44,6 +46,8 @@
                 title="Enter your last name"
                 autocomplete="family-name"
                 placeholder="Enter"
+                aria-required="true"
+                value="Resende"
               />
             </div>
 
@@ -59,6 +63,8 @@
                 title="Street Address"
                 autocomplete="street-address"
                 placeholder="Enter"
+                aria-required="true"
+                value="bobos"
               />
 
               <!-- City  -->
@@ -71,6 +77,8 @@
                 title="City"
                 autocomplete="city-address"
                 placeholder="Enter"
+                aria-required="true"
+                value="rio"
               />
 
               <!-- State  -->
@@ -83,6 +91,8 @@
                 title="State"
                 autocomplete="state-address"
                 placeholder="Enter"
+                aria-required="true"
+                value="rio"
               />
 
               <!-- Zip Code  -->
@@ -92,9 +102,11 @@
                 id="zip"
                 name="zip"
                 required
-                title="Zip Code"
-                autocomplete="zipcode-address"
-                placeholder="Enter"
+                title="Zip Code (e.g., 12345 or 12345-6789)"
+                pattern="^\d{5}(-\d{4})?$"
+                autocomplete="postal-code"
+                placeholder="Enter Zip Code"
+                aria-required="true"
               />
             </div>
           </fieldset>
@@ -105,31 +117,40 @@
             <!-- Credit Card Number  -->
             <label for="cardNumber">Credit Card Number: </label>
             <input
-              type="number"
+              type="text"
+              pattern="^\d{16}$"
               id="cardNumber"
               name="cardNumber"
               required
-              title="Credit Card Number"
+              title="Credit Card Number with 16 numbers"
               autocomplete="number-card"
-              placeholder="Enter"
+              placeholder="Enter Card Number"
+              aria-required="true"
+              value="1234123412341234"
             />
 
             <!-- Expiration Date  -->
             <label for="expiration">Expiration Date: </label>
             <input
-              type="number"
+              type="text"
               id="expiration"
               name="expiration"
               required
               title="Expiration Date"
               autocomplete="date-card"
-              placeholder="Enter"
+              placeholder="MM/YY"
+              pattern="^\d{4}$"
+              minlength="4"
+              maxlength="4"
+              aria-required="true"
+              value="1226"
             />
 
             <!-- Security Code  -->
             <label for="code">Security Code: </label>
             <input
-              type="number"
+              type="text"
+              pattern="^\d{3}$"
               id="code"
               name="code"
               required
@@ -137,7 +158,9 @@
               minlength="3"
               maxlength="3"
               autocomplete="code-card"
-              placeholder="Enter"
+              placeholder="XXX"
+              aria-required="true"
+              value="123"
             />
           </fieldset>
 
@@ -159,9 +182,8 @@
           </fieldset>
 
           <!-- Checkout button  -->
-          <button type="submit" id="checkoutSubmit" value="Checkout button">
-            Checkout
-          </button>
+          <!-- <a href="/checkout/success.html" id="checkoutSubmit" value="Checkout button">Checkout</a> -->
+          <button id="checkoutSubmit" type="submit">Checkout</button>
         </form>
       </section>
     </main>

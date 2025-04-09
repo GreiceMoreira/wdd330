@@ -1,16 +1,20 @@
 const baseURL = import.meta.env.VITE_SERVER_URL
 
-function convertToJson(res) {
+
+async function convertToJson(res) {
+  const data = await res.json();
   if (res.ok) {
-    return res.json();
+    return data;
   } else {
-    throw new Error("Bad Response");
+    throw {      
+      name: "servicesError",
+      message: data.message || JSON.stringify(data) || "Unknown error",
+      status: res.status, };
   }
 }
 
 export default class ExternalServices {
   constructor() {
-    
   }
 
   async getData(category) {
@@ -36,7 +40,8 @@ export default class ExternalServices {
       },
       body: JSON.stringify(payload),
     };
-    return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
+    const url = new URL("checkout", baseURL);
+    return await fetch(url, options).then(convertToJson);
   }
 
 }

@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -51,7 +51,7 @@ export default class CheckoutProcess {
 
         const amounts = this.list.map((item) => item.FinalPrice);
         this.itemTotal = amounts.reduce((sum, item) => sum + item);
-        summaryElement.innerHTML = `$${this.itemTotal}`;
+        summaryElement.innerHTML = `$${this.itemTotal.toFixed(2)}`;
 
     }
 
@@ -95,15 +95,29 @@ export default class CheckoutProcess {
         const order = formDataToJSON(formElement);
     
         order.orderDate = new Date().toISOString();
-        order.orderTotal = this.orderTotal;
-        order.tax = this.tax;
+        order.orderTotal = this.orderTotal.toFixed(2);
+        order.tax = this.tax.toFixed(2);
         order.shipping = this.shipping;
         order.items = packageItems(this.list);
         console.log(order);
 
+            // Mock 
+    services.checkout = async function(order) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({
+                    success: true,
+                    message: "Order submitted successfully!"
+                });
+            }, 1000); // Simula um delay de 1 segundo
+        });
+    };
+
         try{
-            const response = await services.checkout(order);
-            console.log(response);
+            const res = await services.checkout(order);
+            console.log(res);
+            setLocalStorage("so-cart", []);
+            location.assign("/checkout/success.html");
         }catch (err) {
             console.log(err);
             alert("There was a problem submitting your order. Please try again.");
