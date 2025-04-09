@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -92,16 +92,15 @@ export default class CheckoutProcess {
 
     async checkout() {
         const formElement = document.forms["checkout"];
-        const order = formDataToJSON(formElement);
-    
-        order.orderDate = new Date().toISOString();
-        order.orderTotal = this.orderTotal.toFixed(2);
-        order.tax = this.tax.toFixed(2);
-        order.shipping = this.shipping;
-        order.items = packageItems(this.list);
+            
+        if (!validateFormAndShowErrors(formElement)) {
+            return;  // Prevents order submission if the form is invalid
+        }
+
+        const order = generateOrderData(formElement, this.orderTotal, this.tax, this.shipping, this.list);
         console.log(order);
 
-            // Mock 
+            // Mock service
     services.checkout = async function(order) {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -109,7 +108,7 @@ export default class CheckoutProcess {
                     success: true,
                     message: "Order submitted successfully!"
                 });
-            }, 1000); // Simula um delay de 1 segundo
+            }, 1000); 
         });
     };
 
@@ -120,9 +119,38 @@ export default class CheckoutProcess {
             location.assign("/checkout/success.html");
         }catch (err) {
             console.log(err);
-            alert("There was a problem submitting your order. Please try again.");
+            if (err.name === 'servicesError') {
+                alert(`There was a problem with your order: ${err.message}`);
+            } else {
+                alert("There was a problem submitting your order. Please try again.");
+            }
         }
     }
 
 
+}
+
+function generateOrderData(formElement, orderTotal, tax, shipping, list) {
+    const order = formDataToJSON(formElement);  
+    order.orderDate = new Date().toISOString();  
+    order.orderTotal = orderTotal.toFixed(2);   
+    order.tax = tax.toFixed(2);                
+    order.shipping = shipping;                 
+    order.items = packageItems(list);          
+    return order;                           
+}
+
+function validateFormAndShowErrors(formElement) {
+    if (!formElement.checkValidity()) {
+        const invalidFields = formElement.querySelectorAll('input:invalid');  
+        console.log(invalidFields);
+        
+        invalidFields.forEach((field) => {
+            alertMessage(`Invalid ${field.name}`);
+        });
+     
+        formElement.reportValidity();
+        return false; 
+    }
+    return true;
 }
